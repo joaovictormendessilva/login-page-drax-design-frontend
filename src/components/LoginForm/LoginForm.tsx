@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { type AxiosResponse } from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -6,7 +7,7 @@ import { api } from "../../axios/config";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { SocialChip } from "../SocialChip";
-
+import { schema } from "./validation/schema";
 import type { FormData } from "./validation/Schema.type";
 
 export function LoginForm() {
@@ -15,7 +16,7 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({});
+  } = useForm<FormData>({ resolver: yupResolver(schema) });
 
   const { fetchLogin, data } = useLogin();
 
