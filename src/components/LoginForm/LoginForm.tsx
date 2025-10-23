@@ -1,14 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { type AxiosResponse } from "axios";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { api } from "../../axios/config";
 import { Button } from "../Button";
 import { Input } from "../Input";
 import { SocialChip } from "../SocialChip";
 import { schema } from "./validation/schema";
 import type { FormData } from "./validation/Schema.type";
+import { useLogin } from "../../hooks/useLogin";
 
 export function LoginForm() {
   const {
@@ -18,13 +16,11 @@ export function LoginForm() {
     reset,
   } = useForm<FormData>({ resolver: yupResolver(schema) });
 
-  const { fetchLogin, data } = useLogin();
+  const { fetchLogin } = useLogin();
 
   const onSubmit = async (formData: FormData) => {
     try {
       await fetchLogin(formData);
-
-      console.log(data);
 
       reset();
       toast.success("Login Successful.");
@@ -85,31 +81,3 @@ export function LoginForm() {
     </form>
   );
 }
-
-type LoginProps = {
-  email: string;
-  password: string;
-};
-
-type LoginResponseProps = {
-  access_token: string;
-};
-
-const useLogin = () => {
-  const [data, setData] = useState<LoginResponseProps>({} as LoginResponseProps);
-
-  const fetchLogin = async (body: LoginProps) => {
-    const response = await api.post<
-      LoginResponseProps,
-      AxiosResponse<LoginResponseProps>,
-      LoginProps
-    >("/auth/login", body);
-
-    setData(response.data);
-  };
-
-  return {
-    fetchLogin,
-    data,
-  };
-};

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ToastContainer } from "react-toastify";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   emailIsRequired,
   enterAtLeastCharacters,
@@ -10,6 +10,15 @@ import {
 } from "../../utils/validation-messages";
 import { LoginForm } from "./LoginForm";
 import { minPasswordCharacters } from "./utils/min-password-characters";
+
+const mockFetchLogin = vi.fn().mockResolvedValue(undefined);
+
+vi.mock("../../hooks/useLogin", () => ({
+  useLogin: () => ({
+    fetchLogin: mockFetchLogin,
+    data: { access_token: "fake_token" },
+  }),
+}));
 
 describe("LoginForm", () => {
   it("should display email and password inputs", () => {
@@ -86,13 +95,13 @@ describe("LoginForm", () => {
       name: /sign in/i,
     });
 
-    await userEvent.type(inputEmail, "john@gmail.com");
+    await userEvent.type(inputEmail, "jo@hotmail.com");
 
-    await userEvent.type(inputPassword, "1234567");
+    await userEvent.type(inputPassword, "123456");
 
     await userEvent.click(button);
 
-    const toastMessage = screen.getByText(/login successful./i);
+    const toastMessage = await screen.findByText(/login successful./i);
 
     expect(toastMessage).toBeInTheDocument();
     expect(toastMessage).toHaveClass("Toastify__toast--success");
