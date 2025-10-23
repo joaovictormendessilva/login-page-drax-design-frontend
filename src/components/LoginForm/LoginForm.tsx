@@ -16,7 +16,7 @@ export function LoginForm() {
     reset,
   } = useForm<FormData>({ resolver: yupResolver(schema) });
 
-  const { fetchLogin } = useLogin();
+  const { mutateAsync: fetchLogin, isPending } = useLogin();
 
   const onSubmit = async (formData: FormData) => {
     try {
@@ -57,7 +57,7 @@ export function LoginForm() {
       </div>
 
       <div className="pt-8">
-        <Button text="Sign in" onClick={() => {}} type="submit" />
+        <Button text="Sign in" onClick={() => {}} type="submit" isLoading={isPending} />
       </div>
 
       <div className="pt-6">

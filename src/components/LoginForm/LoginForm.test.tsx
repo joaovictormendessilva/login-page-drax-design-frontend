@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ToastContainer } from "react-toastify";
 import { describe, expect, it, vi } from "vitest";
@@ -15,8 +15,7 @@ const mockFetchLogin = vi.fn().mockResolvedValue(undefined);
 
 vi.mock("../../hooks/useLogin", () => ({
   useLogin: () => ({
-    fetchLogin: mockFetchLogin,
-    data: { access_token: "fake_token" },
+    mutateAsync: mockFetchLogin,
   }),
 }));
 
@@ -101,10 +100,12 @@ describe("LoginForm", () => {
 
     await userEvent.click(button);
 
-    const toastMessage = await screen.findByText(/login successful./i);
+    await waitFor(async () => {
+      const toastMessage = await screen.findByText(/login successful./i);
 
-    expect(toastMessage).toBeInTheDocument();
-    expect(toastMessage).toHaveClass("Toastify__toast--success");
+      expect(toastMessage).toBeInTheDocument();
+      expect(toastMessage).toHaveClass("Toastify__toast--success");
+    });
   });
 
   it("should clear all fields after submit", async () => {
