@@ -70,7 +70,7 @@ export function LoginForm() {
         <SocialChip src="/facebook_icon.svg" />
       </div>
 
-      <div className="pt-16">
+      <div className="flex justify-center pt-16">
         <p className="text-sm text-[#333333]">
           Don't have an account yet?{" "}
           <b className="text-[#AE4700]">
