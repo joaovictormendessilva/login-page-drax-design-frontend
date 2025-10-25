@@ -8,7 +8,7 @@ Projeto simples cujo objetivo é servir como uma tela de login para fins pedagó
 
 Este repositório contém uma aplicação React + TypeScript criada com Vite e organizada para facilitar estudos sobre fluxo de autenticação e estrutura de projeto.
 
-Este projeto segue em conjunto com o backend que está no repositório:
+Este projeto segue em conjunto com o backend que está no repositório: [backend](https://github.com/joaovictormendessilva/login-page-drax-design-backend)
 
 ---
 
@@ -18,7 +18,7 @@ A simple project designed to serve as a login screen for educational purposes: p
 
 This repository contains a React + TypeScript application created with Vite and organized to facilitate studies on authentication flow and project structure.
 
-This project goes hand in hand with the backend that is in the repository:
+This project goes hand in hand with the backend that is in the repository: [backend](https://github.com/joaovictormendessilva/login-page-drax-design-backend)
 
 ---
 
